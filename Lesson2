@@ -1,0 +1,25 @@
+Lesson 2 .
+Задание 1. Использую Docker для запуска последней версии Mysql, запись пароля в my.cnf не актуальна для данного способа.
+Задание 2 
+https://yadi.sk/i/I8cqPcpwQ8KUmQ
+https://yadi.sk/i/BM_CtqjnpZYqmQ
+https://yadi.sk/i/NCtOW8cfx3jJ0A
+
+CREATE DATABASE example;
+DESCRIBE users;
+CREATE TABLE users (id int NOT NULL AUTO_INCREMENT, name varchar(255), PRIMARy KEY (id));
+
+CREATE DATABASE sample;
+USE example;
+DESCRIBE example;
+
+
+Задание 3.
+docker exec some-mysql /usr/bin/mysqldump -u root --password=12345678 -A > backup.sql - полный бэкап в текущую папку
+cat backup.sql | docker exec -i some-mysql /usr/bin/mysql -u root --password=12345678 -A восстановление полного бэкапа из текущей папки
+
+docker exec some-mysql /usr/bin/mysqldump -u root --password=12345678 example > backup_example.sql
+cat backup_example.sql | docker exec -i some-mysql /usr/bin/mysql -u root --password=12345678 sample восстановление полного бэкапа из текущей папки
+
+Задание 4.
+docker exec some-mysql /usr/bin/mysqldump -u root --password=12345678  --where="1 limit 100" mysql help_keyword > dump.sql

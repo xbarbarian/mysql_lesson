@@ -1,0 +1,12 @@
+-- Task 1 Ready -----------------
+use vk2;
+select * from users;
+select timestampdiff(YEAR, birthday_at, now()) as age from users;
+select avg(timestampdiff(YEAR, birthday_at, now())) as age from users;
+
+-- Task 2 Ready
+select year(birthday_at), month(birthday_at), day(birthday_at) from users;
+select concat_ws('.', year(now()), month(birthday_at), day(birthday_at)) as day from users;
+
+select date_format(date(concat_ws('.', year(now()), month(birthday_at), day(birthday_at))), '%W') 
+as day, count(*) as day_total from users group by day;

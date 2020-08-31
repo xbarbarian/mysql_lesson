@@ -1,0 +1,103 @@
+-- Task 1 Ready------
+create database vk2;
+use vk2;
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) COMMENT 'Имя',
+  birthday_at DATE COMMENT 'Дата рождения',
+  created_at DATETIME,
+  updated_at DATETIME
+) COMMENT = 'Пользователи';
+
+INSERT INTO users (name, birthday_at) VALUES
+  ('user1', '1980-01-05'),
+  ('user2', '1981-02-12'),
+  ('user3', '1982-03-20'),
+  ('user4', '1983-04-14'),
+  ('user5', '1984-05-12'),
+  ('user6', '1985-06-29');
+  
+  select * from users;
+  SET SQL_SAFE_UPDATES=0;
+  update users set created_at = now(), updated_at =now();
+  
+  -- Task2 Ready---------------
+  drop table users;
+  
+  CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) COMMENT 'Имя',
+  birthday_at DATE COMMENT 'Дата рождения',
+  created_at varchar(255),
+  updated_at varchar(255)
+) COMMENT = 'Пользователи';
+select * from users;
+
+INSERT INTO users (name, birthday_at, created_at, updated_at) VALUES
+  ('user1', '1980-01-05', '1980.01.05 8:01', '1980.01.05 8:01'),
+  ('user2', '1981-02-12', '1981.02.12 9:02', '1981.02.12 9:02'),
+  ('user3', '1982-03-20', '1982.03.20 10:03', '1982.03.20 10:03'),
+  ('user4', '1983-04-14', '1983.04.14 11:04', '1983.04.14 11:04'),
+  ('user5', '1984-05-12', '1984.05.12 12:05', '1984.05.12 12:05'),
+  ('user6', '1985-06-29', '1985.06.29 13:06', '1985.06.29 13:06');
+  
+  -- truncate table users;
+  -- describe users;
+  select str_to_date(created_at, '%Y.%m.%d %k:%i') from users;
+  
+  update users set
+    created_at = str_to_date(created_at, '%Y.%m.%d %k:%i'), 
+    updated_at = str_to_date(updated_at, '%Y.%m.%d %k:%i');
+  
+  alter table users change
+  created_at created_at datetime default current_timestamp;
+  
+  alter table users change
+  updated_at updated_at datetime default current_timestamp;
+  describe users;
+  
+  -- task 3  Ready -------------------------
+  
+  CREATE TABLE storehouses_products (
+  id SERIAL PRIMARY KEY,
+  storehouse_id INT UNSIGNED,
+  product_id INT UNSIGNED,
+  value INT UNSIGNED COMMENT 'Запас товарной позиции на складе',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) COMMENT = 'Запасы на складе';
+
+insert into 
+storehouses_products (storehouse_id, product_id, value)
+values
+(1,222,0),
+(2,333,1),
+(1,444,2),
+(3,555,0),
+(1,666,3);
+
+select * from storehouses_products order by if (value >0, 0, 1), value;
+
+-- Task 4 Ready------------------------
+select * from users;
+select  * from users where (select date_format(birthday_at, '%M') like 'may' or date_format(birthday_at, '%M') like 'june');
+
+-- Task 5 Ready -----------------------
+
+CREATE TABLE catalogs (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) COMMENT 'Название раздела',
+  UNIQUE unique_name(name(10))
+) COMMENT = 'Разделы интернет-магазина';
+
+INSERT INTO catalogs VALUES
+  (NULL, 'Процессоры'),
+  (NULL, 'Материнские платы'),
+  (NULL, 'Видеокарты'),
+  (NULL, 'Жесткие диски'),
+  (NULL, 'Оперативная память');
+
+
+select id, name, field(id, 5, 1, 2) from catalogs;
+select * from catalogs where id in (5, 1, 2) order by field(id, 5, 1, 2); 

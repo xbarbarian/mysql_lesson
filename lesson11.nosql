@@ -1,0 +1,43 @@
+-- Практическое задание тема "NoSQL"
+-- 1. В базе данных Redis подберите коллекцию для подсчета посещений с определенных IP-адресов.
+HINCRBY addresses '127.0.0.1' 1
+HINCRBY addresses '127.0.0.2' 1
+HINCRBY addresses '127.0.0.3' 1
+HGETALL addresses
+
+-- https://yadi.sk/i/cLb1_48duv9Y5g
+
+-- 2. При помощи базы данных Redis решите задачу поиска имени пользователя по электронному
+-- адресу и наоборот, поиск электронного адреса пользователя по его имени.
+HSET emails 'test' 'test@test.com'
+HSET emails 'test2' 'test2@test.com'
+HSET emails 'test3' 'test3@test.ru'
+
+HGET emails 'test3'
+
+HSET users 'test@test.com' 'test'
+HSET users 'test2@test.com' 'test2'
+HSET users 'test3@test.com' 'test3'
+
+HGET users 'test2@test.com'
+
+-- https://yadi.sk/i/0dMutbQ7OD9lbw
+
+
+-- 3. Организуйте хранение категорий и товарных позиций учебной базы данных shop в СУБД MongoDB.
+-- Предлагаемый вариант
+
+
+show dbs
+
+use shop
+
+db.createCollection('catalogs')
+db.createCollection('products')
+
+db.catalogs.insert({name: 'Процессоры'})
+
+db.products.insert({name: 'Эльбрус-4',description: 'Russian new processor high perfomance',price: '1000000'})
+WriteResult({ "nInserted" : 1 })
+
+https://yadi.sk/i/veinJcweH130jQ
